@@ -76,15 +76,34 @@ main (){
 }
 
 int displayMainMenu(){
-	int result = 0;
-	cls;
+	int result = 0, i =0, j =0;
+	char chararray[4][50] = {'/0'};
+
+		for (j=0; j<3; j++)
+		{
+		for (i=0; i<35; i++)
+		{
+		chararray[j][i]= 205;
+		}//end inside for loop
+		}//end outside for loop
+
+		chararray[0][0]= 201;
+		chararray[0][35]= 187;
+		chararray[1][0]=204;
+		chararray[1][35]=185;
+		chararray[2][0]= 200;
+		chararray[2][35]=188;
+		chararray[3][0]=186;
 
 	printf("NINJAS VS PIRATES COMBAT LEAGUE!\n\n");
-	printf("MAIN MENU\n");
-	printf("1) Enter the result of a game\n");
-	printf("2) Display the league standings\n");
-	printf("3) Restart the entire season\n");
-	printf("4) Quit the program\n");
+	printf("%s\n", chararray[0]);
+	printf("%c             MAIN MENU            %c\n", chararray[3][0], chararray[3][0]);
+	printf("%s\n", chararray[1]);
+	printf("%c1) Enter the result of a game     %c\n", chararray[3][0], chararray[3][0]);
+	printf("%c2) Display the league standings   %c\n", chararray[3][0], chararray[3][0]);
+	printf("%c3) Restart the entire season      %c\n", chararray[3][0], chararray[3][0]);
+	printf("%c4) Quit the program               %c\n", chararray[3][0], chararray[3][0]);
+	printf("%s\n", chararray[2]);
 	printf("Enter a choice (1-4): ");
 	scanf("%i", &result);
 	flush;
