@@ -41,15 +41,7 @@ main (){
 	char activeTeams [12][15]= {"Pirates", "Raiders", "Theives", "Mongrel", "Seahags", "Wenches", "Ninjas", 
 		"Hitmen", "Shadows", "Shades", "Ronin", "Rogues"};
 
-	TEAM team[TSIZE];//create an array of structs as the data type TEAM
-
-	for (i=0; i<TSIZE; i++){
-		team[i].pointsScored = 0; //STRUCTS NEED TO BE INITIALIZED
-		team[i].pointsAgainst= 0;
-		team[i].pct = 0.0;//DONT FORGET!!!!!!!!!!!!!!!!!!!!!!
-		team[i].wins = 0;
-		team[i].losses = 0;
-	}// INITIALIZE structs
+	TEAM team[TSIZE] = {0};//create AND **INITIALIZE** array of team
 
 	for (i=0; i<TSIZE; i++){
 		strcpy(team[i].teamName, activeTeams[i]);//strcpy to move a string to a char pointer
