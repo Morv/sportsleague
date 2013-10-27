@@ -55,26 +55,26 @@ main (){
 	
 	system("mode 80, 35"); //width and height locked at max 80x35, scrolling disabled ("mode COLS = 80") works with scrolling enabled
 	
-	readSeasonInfo(team);
+	readSeasonInfo(team); //opens binary file
 	do{
 		switch(choice = displayMainMenu())
 		{
 		case 1:
-			inputData(team);
+			inputData(team); //input game
 			break;
 		case 2:
-			sortPCT(team);
+			sortPCT(team);			//sorts teams by PCT
 			displayStandings(team);
 			break;
 		case 3:
-			resetSeasonStandings(team);
+			resetSeasonStandings(team); //sets all numbers to zero
 			break;
 		case 4:
 			saveSeasonStandings(team, z);
 			printf("NINJA VANISH!\n");
 			break;
 		}//end switch
-	}while(choice != 4);
+	}while(choice != 4); //end do-while
 
 	pause;
 }
@@ -100,26 +100,21 @@ int displayMainMenu(){
 	menuArray[3][0]=186;
 
 	cls;
-	printf("NINJAS VS PIRATES COMBAT LEAGUE!\n\n");
-	printf("%s\n", menuArray[0]);
-	printf("%c             MAIN MENU            %c\n", menuArray[3][0], menuArray[3][0]);
-	printf("%s\n", menuArray[1]);
-	printf("%c1) Enter the result of a game     %c\n", menuArray[3][0], menuArray[3][0]);
-	printf("%c2) Display the league standings   %c\n", menuArray[3][0], menuArray[3][0]);
-	printf("%c3) Restart the entire season      %c\n", menuArray[3][0], menuArray[3][0]);
-	printf("%c4) Quit the program               %c\n", menuArray[3][0], menuArray[3][0]);
-	printf("%s\n", menuArray[2]);
+	printf("\t\t\t  NINJAS VS PIRATES COMBAT LEAGUE!\n\n");
+	printf("\t\t\t%s\n", menuArray[0]);
+	printf("\t\t\t%c             MAIN MENU            %c\n", menuArray[3][0], menuArray[3][0]);
+	printf("\t\t\t%s\n", menuArray[1]);
+	printf("\t\t\t%c1) Enter the result of a game     %c\n", menuArray[3][0], menuArray[3][0]);
+	printf("\t\t\t%c2) Display the league standings   %c\n", menuArray[3][0], menuArray[3][0]);
+	printf("\t\t\t%c3) Restart the entire season      %c\n", menuArray[3][0], menuArray[3][0]);
+	printf("\t\t\t%c4) Quit the program               %c\n", menuArray[3][0], menuArray[3][0]);
+	printf("\t\t\t%s\n", menuArray[2]);
 	printf("Enter a choice (1-4): ");
 	scanf("%i", &result);
 	flush;
-
-	while (result < 1 || result > 4)
-	{
-		printf("Enter a  valid number 1-4: ");
-		scanf("%i", &result);
-		flush;
-	}//error check..
+	result = verifyChoice(result, 4);
 	cls;
+	
 	return result;
 }//end main menu
 void displayStandings(TEAM team[TSIZE]){
@@ -133,10 +128,10 @@ void displayStandings(TEAM team[TSIZE]){
 		exit(-1);
 	}
 	else 
-		printf("Text File created!\n");
-		pause;
+		//printf("Text File created!\n");
+		//pause;
 	
-		//DESIGN ARRAY
+							//menu design
 	for (j=0; j<3; j++)
 	{
 		for (i=0; i<80; i++)
@@ -145,26 +140,22 @@ void displayStandings(TEAM team[TSIZE]){
 		}//end inside for loop
 	}//end outside for loop
 
-	menuArray[0][0]= 201;
+	menuArray[0][0] = 201;
 	menuArray[0][79]= 187;
-	menuArray[1][0]=204;
-	menuArray[1][79]=185;
-	menuArray[2][0]= 200;
-	menuArray[2][79]=188;
-	menuArray[3][0]=186;
+	menuArray[1][0] = 204;
+	menuArray[1][79]= 185;
+	menuArray[2][0] = 200;
+	menuArray[2][79]= 188;
+	menuArray[3][0] = 186;
 	menuArray[3][1] = 196;
 	menuArray[3][2] = 199;
 	menuArray[3][3] = 182;
-
-
-		//END DESIGN ARRAY
-	
-	
+							//end menu design
 		
 	cls;
 	for (i=0; i< 80; i++)
 	{
-	printf("%c", menuArray[0][i]);
+	printf("%c", menuArray[0][i]); //%s is not working in this function.  it prints out every row of the array.
 	}//end for loop
 	
 	printf("%c               ************LEAGUE STANDINGS***********\t\t\t       %c%c\t\t\t\t\t\t\t\t\t       %c",
@@ -205,94 +196,161 @@ void displayStandings(TEAM team[TSIZE]){
 }//end displayStandings
 
 void displayTeams(TEAM team[]){
-	int i = 0;
-	for (i=0; i<TSIZE; i++){
-		printf("%i: %s\n",i , team[i].teamName);
-	}//end for loop
+	int i = 0, j =0;
+	char menuArray[4][15] = {'/0'};
 
+								//menu design
+	for (j=0; j<3; j++)
+	{
+		for (i=0; i<15; i++)
+		{
+			menuArray[j][i]= 205;
+		}//end inside for loop
+	}//end outside for loop
+
+	menuArray[0][0] = 201;
+	menuArray[0][14]= 187;
+	menuArray[1][0] = 204;
+	menuArray[1][14]= 185;
+	menuArray[2][0] = 200;
+	menuArray[2][14]= 188;
+	menuArray[3][0] = 186;
+	menuArray[3][1] = 196;
+	menuArray[3][2] = 199;
+	menuArray[3][3] = 182;
+	menuArray[3][4] = 179;
+							//end menu design
+	printf("\t\t\t");
+	for (i=0; i<15; i++)
+	{
+		printf("%c", menuArray[0][i]);
+	}//end for loop
+	
+	printf("\n");
+	printf("\t\t\t%c    TEAMS    %c\n",menuArray[3][0],menuArray[3][0]);
+	printf("\t\t\t");
+
+	for (i=0; i<15; i++)
+	{
+		printf("%c", menuArray[1][i]);
+	}//end for loop
+	printf("\n");
+
+	for (i=0; i<TSIZE; i++){
+		if (i > 8)
+		{
+			switch(strlen(team[i].teamName))
+			{
+			case 5:
+				printf("\t\t\t%c %i%c %s   %c\n",menuArray[3][0], i+1, menuArray[3][4] , team[i].teamName, menuArray[3][0]);
+				break;
+			case 6: 
+				printf("\t\t\t%c %i%c %s  %c\n",menuArray[3][0], i+1, menuArray[3][4] , team[i].teamName, menuArray[3][0]);
+				break;				
+			default:
+				printf("\t\t\t%c %i%c %s %c\n",menuArray[3][0], i+1, menuArray[3][4] , team[i].teamName, menuArray[3][0]);
+			break;
+			}//end switch
+
+		}else{
+			switch(strlen(team[i].teamName))
+			{
+				case 6:
+					printf("\t\t\t%c %i %c %s  %c\n",menuArray[3][0], i+1, menuArray[3][4] , team[i].teamName, menuArray[3][0]);
+					break;
+				default:
+					printf("\t\t\t%c %i %c %s %c\n",menuArray[3][0], i+1, menuArray[3][4] , team[i].teamName, menuArray[3][0]);
+					break;
+			}//end switch
+		}//end if-else
+	}//end for loop
+	printf("\t\t\t");
+	for (i=0; i< 15; i++)
+	{
+		printf("%c", menuArray[2][i]);
+	}//end for loop
+	printf("\n");
 }//end displayTeams
 
 void inputData (TEAM team[TSIZE]){
-	int homeTeam = 0, homeTeamScore = 0, awayTeam = 0, awayTeamScore = 0, noTieFlag = 0;
+	int homeTeam = 0, homeTeamScore = 0, awayTeam = 0, awayTeamScore = 0;
 	int i = 0;
 
 	do{
-		do{
-			noTieFlag = 0;
-			displayTeams(team);
-			printf("Enter Home Team: ");
-			scanf("%i", &homeTeam);
-			flush;
-			homeTeam = verifyChoice(homeTeam, 11);
+		displayTeams(team);
+		printf("Enter Home Team number: ");
+		scanf("%i", &homeTeam);
+		flush;
+		homeTeam = verifyChoice(homeTeam, 12);
 
-			printf("Enter Home Team Score: ");
+		printf("Enter Home Team Score: ");
+		scanf("%i", &homeTeamScore);
+		flush;
+
+		while (homeTeamScore < 0) //error check for negative scores
+		{
+			printf("Enter a positive number for the team's score: ");
 			scanf("%i", &homeTeamScore);
 			flush;
-			while (homeTeamScore < 0)
-			{
-				printf("Enter a positive number for the team's score: ");
-				scanf("%i", &homeTeamScore);
-				flush;
-			}//end while
+		}//end while
 			
-			printf("Enter Away Team: ");
+		printf("Enter Away Team number: ");
+		scanf("%i", &awayTeam);
+		awayTeam = verifyChoice(awayTeam, 12);
+		flush;
+
+		while (homeTeam == awayTeam)
+		{
+			printf("Ninjas nor Pirates will fight themselves!\n");
+			printf("Enter Away Team number: ");
 			scanf("%i", &awayTeam);
-			awayTeam = verifyChoice(awayTeam, 11);
+			awayTeam = verifyChoice(awayTeam, 12);
 			flush;
+		}//end while
 
-			while (homeTeam == awayTeam)
-			{
-				printf("Ninjas nor Pirates will fight themselves!\n");
-				printf("Enter Away Team: ");
-				scanf("%i", &awayTeam);
-				awayTeam = verifyChoice(awayTeam, 11);
-				flush;
-			}//end while
-
-			printf("Enter Away Team Score: ");
+		printf("Enter Away Team Score: ");
+		scanf("%i", &awayTeamScore);
+		flush;
+		while (awayTeamScore < 0)
+		{
+			printf("Enter a positive number for the team's score: ");
 			scanf("%i", &awayTeamScore);
 			flush;
-			while (awayTeamScore < 0)
-			{
-				printf("Enter a positive number for the team's score: ");
-				scanf("%i", &awayTeamScore);
-				flush;
-			}//end while
-
-		}while(homeTeam == awayTeam || homeTeam < 0 || homeTeam > 11 || awayTeam < 0 || awayTeam > 11);
-
-		if (homeTeamScore > awayTeamScore)
-		{
-			team[homeTeam].wins = team[homeTeam].wins + 1;
-			team[awayTeam].losses = team[awayTeam].losses + 1;
-		}
-
-		if (homeTeamScore < awayTeamScore)
-		{
-			team[awayTeam].wins = team[awayTeam].wins + 1;
-			team[homeTeam].losses = team[homeTeam].losses +1;
-		}
+		}//end while
 
 		while(homeTeamScore == awayTeamScore)
 		{
 			cls;
 			printf("Ninjas and Pirates always fight till death, somebody's gotta win!\n");
 			printf("Please check score and enter again!\n");
-			printf("Enter score for %s: ", team[homeTeam].teamName);
+			printf("Enter score for %s: ", team[homeTeam-1].teamName);
 			scanf("%i", &homeTeamScore);
-			printf("Enter score for %s: ", team[awayTeam].teamName);
+			printf("Enter score for %s: ", team[awayTeam-1].teamName);
 			scanf("%i", &awayTeamScore);
 			pause;
 		}//end while
-		cls;
-	} while(noTieFlag == 1);//end do-while that prevents erroroneous entering of scores/ties
 
-	team[homeTeam].pointsScored += homeTeamScore;//all this outside of loops so it happens regardless of win/lose status
-	team[homeTeam].pointsAgainst += awayTeamScore;
-	team[awayTeam].pointsScored += awayTeamScore;
-	team[awayTeam].pointsAgainst += homeTeamScore;
-	team[homeTeam].pct = ( (team[homeTeam].wins) / (team[homeTeam].wins + team[homeTeam].losses) );
-	team[awayTeam].pct = ( (team[awayTeam].wins) / (team[awayTeam].wins + team[awayTeam].losses) );
+	}while(homeTeam == awayTeam || homeTeam < 1 || homeTeam > 12 || awayTeam < 1 || awayTeam > 12); //END BIG WHILE
+
+	if (homeTeamScore > awayTeamScore)
+	{
+		team[homeTeam-1].wins = team[homeTeam-1].wins + 1;
+		team[awayTeam-1].losses = team[awayTeam-1].losses + 1;
+	}//end if
+
+	if (homeTeamScore < awayTeamScore)
+	{
+		team[awayTeam-1].wins = team[awayTeam-1].wins + 1;
+		team[homeTeam-1].losses = team[homeTeam-1].losses +1;
+	}//end if
+	cls;
+
+	team[homeTeam-1].pointsScored += homeTeamScore;//all this outside of loops so it happens regardless of win/lose status
+	team[homeTeam-1].pointsAgainst += awayTeamScore;
+	team[awayTeam-1].pointsScored += awayTeamScore;
+	team[awayTeam-1].pointsAgainst += homeTeamScore;
+	team[homeTeam-1].pct = ( (team[homeTeam-1].wins) / (team[homeTeam-1].wins + team[homeTeam-1].losses) );
+	team[awayTeam-1].pct = ( (team[awayTeam-1].wins) / (team[awayTeam-1].wins + team[awayTeam-1].losses) );
 
 }//end input game (enter result of a game)
 
@@ -306,9 +364,9 @@ void readSeasonInfo (TEAM team[], int z){
 		exit(-1);
 	}
 	else 
-		printf("Binary File created!\n");
+		//printf("Binary File created!\n"); 
 	fclose (fp1);
-	pause;
+		//pause;
 	fp1 = fopen("standings.bin", "rb");
 	fread(&z, sizeof (int), 1, fp1);
 	fread(team, sizeof(TEAM), TSIZE, fp1);
@@ -324,7 +382,7 @@ void resetSeasonStandings(TEAM team[]){
 		team[i].pct = 0.0;
 		team[i].wins = 0;
 		team[i].losses = 0;
-	}
+	}//end for loop
 
 	saveSeasonStandings(team, TSIZE);
 	printf("Standings have been reset!\n");
@@ -357,7 +415,7 @@ void sortPCT (TEAM team[]){
 		}//end for
 		bottom--;
 
-	}while (switchMade == 'Y');
+	}while (switchMade == 'Y'); //end do-while
 
 	return;
 }//end function sortPCT
@@ -372,45 +430,13 @@ char switchPCT (TEAM team[], int i){
 
 	return 'Y';
 }//end function switchPCT
-void menuDesign(char menuArray[][80])
-{
-	int i=0, j=0;
 
-	for (j=0; j<3; j++)
-	{
-		for (i=0; i<80; i++)
-		{
-			menuArray[j][i]= 205;
-		}//end inside for loop
-	}//end outside for loop
-
-	menuArray[0][0]= 201;
-	menuArray[0][79]= 187;
-	menuArray[1][0]=204;
-	menuArray[1][79]=185;
-	menuArray[2][0]= 200;
-	menuArray[2][79]=188;
-	menuArray[3][0]=186;
-
-
-		for (j=0; j<4; j++)
-	{
-		for (i=0; i<80; i++)
-		{
-			printf("%c", menuArray[j][i]);
-		}//end inside for loop
-		printf("\n");
-	}//end outside for loop
-	
-	pause;
-	return;
-}//end menu design
 int verifyChoice(int userChoice, int maxChoice)
 {
         int result = userChoice;
-        while (result > maxChoice || result < 0) //0 is set to be the lowest choice option.
+        while (result > maxChoice || result < 1) //0 is set to be the lowest choice option.
         {
-                printf("\nEnter a number between 0 and %i: ", maxChoice);
+                printf("\nEnter a number between 1 and %i: ", maxChoice);
                 scanf_s("%i", &result);
                 flush;
         }//end if statement
